@@ -37,96 +37,6 @@ int Hour = 0;
 
 
 
-// Fuction to set the time -----------------------------------------------------------------------------------------
-void menuSetTime() {
-  tmElements_t tm;
-    
-  if (RTC.read(tm)) {
-    if (tm.Minute < 10) {
-      MinuteString = "0" + String(tm.Minute);
-    } else {
-      MinuteString = String(tm.Minute);
-    }
-    if (tm.Hour < 10) {
-      HourString = "0" + String(tm.Hour);
-    } else {
-      HourString = String(tm.Hour);
-    }
-    if (changing_option == 1) {
-      changing_string = "Hr";
-    } else if (changing_option == -1) {
-      changing_string = "Min";
-    }
-
-    string = HourString + ":" + MinuteString + " Change:" + changing_string;
-
-    if (string != last_string) {
-      lcd.clear();
-      lcd.setCursor(0, 1);
-      lcd.print("Back   +   OK");
-      lcd.setCursor(0, 0);
-      lcd.print(string);
-    }
-    last_string = string;
-  }
-
-// Changing the hour
-  if (changing_option == 1) {
-    if (digitalRead(button2) == HIGH) {
-      pressed2 = true;
-    } else if (digitalRead(button2) == LOW && pressed2 == true) {
-      pressed2 = false;
-      tm.Hour = tm.Hour + 1;
-      if (tm.Hour == 24) {
-        tm.Hour = 0;
-      }
-      if (RTC.write(tm)) {
-        config = true;
-      }
-    }
-    
-// Changing the minute
-  } else if (changing_option == -1) {
-    if (digitalRead(button2) == HIGH) {
-      pressed2 = true;
-    } else if (digitalRead(button2) == LOW && pressed2 == true) {
-      pressed2 = false;
-      tm.Minute = tm.Minute + 1;
-      if (tm.Minute == 60) {
-        tm.Minute = 0;
-      }
-      if (RTC.write(tm)) {
-        config = true;
-      }
-    }
-  }
-
-// Switch to and from minute etc
-  if (digitalRead(button3) == HIGH) {
-    pressed3 = true;
-  } else if (digitalRead(button3) == LOW && pressed3 == true) {
-    pressed3 = false;
-    changing_option = changing_option * -1;
-  }
-// If back is pressed, switch to the main menu
-  if (digitalRead(button1) == HIGH) {
-    pressed1 = true;
-  } else if (digitalRead(button1) == LOW && pressed1 == true) {
-    pressed1 = false;
-    menu = "main";
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -231,6 +141,99 @@ void addAlarms() {
     Minute = 0;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Fuction to set the time -----------------------------------------------------------------------------------------
+void menuSetTime() {
+  tmElements_t tm;
+    
+  if (RTC.read(tm)) {
+    if (tm.Minute < 10) {
+      MinuteString = "0" + String(tm.Minute);
+    } else {
+      MinuteString = String(tm.Minute);
+    }
+    if (tm.Hour < 10) {
+      HourString = "0" + String(tm.Hour);
+    } else {
+      HourString = String(tm.Hour);
+    }
+    if (changing_option == 1) {
+      changing_string = "Hr";
+    } else if (changing_option == -1) {
+      changing_string = "Min";
+    }
+
+    string = HourString + ":" + MinuteString + " Change:" + changing_string;
+
+    if (string != last_string) {
+      lcd.clear();
+      lcd.setCursor(0, 1);
+      lcd.print("Back   +   OK");
+      lcd.setCursor(0, 0);
+      lcd.print(string);
+    }
+    last_string = string;
+  }
+
+// Changing the hour
+  if (changing_option == 1) {
+    if (digitalRead(button2) == HIGH) {
+      pressed2 = true;
+    } else if (digitalRead(button2) == LOW && pressed2 == true) {
+      pressed2 = false;
+      tm.Hour = tm.Hour + 1;
+      if (tm.Hour == 24) {
+        tm.Hour = 0;
+      }
+      if (RTC.write(tm)) {
+        config = true;
+      }
+    }
+    
+// Changing the minute
+  } else if (changing_option == -1) {
+    if (digitalRead(button2) == HIGH) {
+      pressed2 = true;
+    } else if (digitalRead(button2) == LOW && pressed2 == true) {
+      pressed2 = false;
+      tm.Minute = tm.Minute + 1;
+      if (tm.Minute == 60) {
+        tm.Minute = 0;
+      }
+      if (RTC.write(tm)) {
+        config = true;
+      }
+    }
+  }
+
+// Switch to and from minute etc
+  if (digitalRead(button3) == HIGH) {
+    pressed3 = true;
+  } else if (digitalRead(button3) == LOW && pressed3 == true) {
+    pressed3 = false;
+    changing_option = changing_option * -1;
+  }
+// If back is pressed, switch to the main menu
+  if (digitalRead(button1) == HIGH) {
+    pressed1 = true;
+  } else if (digitalRead(button1) == LOW && pressed1 == true) {
+    pressed1 = false;
+    menu = "main";
+  }
+}
+
 
 
 
